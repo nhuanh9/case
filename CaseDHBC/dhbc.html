@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DHBC</title>
+</head>
+<body>
+<img src="a1.png" alt="" id="ques" width="500">
+<input type="text" id="ans">
+<button onclick="check()">Check</button>
+<script>
+    let arrQuestion = ['a1.png', 'a2.png'];
+    let arrAns = ['Đáp án 1', 'Đáp án 2']
+    function check() {
+        let answer = document.getElementById('ans').value;
+        let question = document.getElementById('ques');// lấy câu hỏi (locolhost:.../a1.png)
+        let srcSplit = question.src.split('/');//cắt đường dẫn câu hỏi
+        let src = srcSplit[srcSplit.length-1];// lấy đúng câu hỏi (a1.png)
+        let index = arrQuestion.indexOf(src);// tìm vị trí câu hỏi trong mảng câu hỏi
+        if (answer == arrAns[index]) {
+            alert('đúng rồi');
+            question.src = arrQuestion[index+1];
+        } else  {
+            alert('Sai rồi, nhập lại đi!');
+        }
+    }
+
+</script>
+</body>
+</html>
