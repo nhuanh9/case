@@ -8,23 +8,65 @@
 <img src="a1.png" alt="" id="ques" width="500">
 <input type="text" id="ans">
 <button onclick="check()">Check</button>
+<button onclick="showHint()">Hint</button>
 <script>
-    let arrQuestion = ['a1.png', 'a2.png'];
-    let arrAns = ['Đáp án 1', 'Đáp án 2']
+    class Question {
+        img;
+        answer;
+        hint;
+        score;
+        time;
+
+        constructor(img, answer, hint, score, time) {
+            this.img = img;
+            this.answer = answer;
+            this.hint = hint;
+            this.score = score;
+            this.time = time;
+        }
+    }
+
+    let arrQuestion = [];
+    arrQuestion.push(new Question('a1.png', 'Hí ae', 'Hí và ae', 8, 20));
+    arrQuestion.push(new Question('a2.png', 'Hí ce', 'Hí và ce', 8, 25));
+
     function check() {
         let answer = document.getElementById('ans').value;
         let question = document.getElementById('ques');// lấy câu hỏi (locolhost:.../a1.png)
         let srcSplit = question.src.split('/');//cắt đường dẫn câu hỏi
-        let src = srcSplit[srcSplit.length-1];// lấy đúng câu hỏi (a1.png)
-        let index = arrQuestion.indexOf(src);// tìm vị trí câu hỏi trong mảng câu hỏi
-        if (answer == arrAns[index]) {
-            alert('đúng rồi');
-            question.src = arrQuestion[index+1];
+        let src = srcSplit[srcSplit.length - 1];// lấy đúng câu hỏi (a1.png)
+        let index = findIndexOfQuestion(src);
+        if (checkAnswer(index, answer)) {
+            alert("Đúng rồi");
+            console.log(index)
+            question.src = arrQuestion[++index].img;
         } else  {
-            alert('Sai rồi, nhập lại đi!');
+            alert('Sai rồi!');
         }
     }
 
+    function findIndexOfQuestion(src) {
+        for (let i = 0; i < arrQuestion.length; i++) {
+            if (src == arrQuestion[i].img) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    function checkAnswer(index, answer) {
+            if (answer == arrQuestion[index].answer) {
+                return true;
+            }
+        return false;
+    }
+    function showHint() {
+        let question = document.getElementById('ques');// lấy câu hỏi (locolhost:.../a1.png)
+        let srcSplit = question.src.split('/');//cắt đường dẫn câu hỏi
+        let src = srcSplit[srcSplit.length - 1];// lấy đúng câu hỏi (a1.png)
+        let index = findIndexOfQuestion(src);
+        alert(arrQuestion[index].hint);
+    }
 </script>
 </body>
 </html>
